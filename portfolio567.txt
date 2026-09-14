@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="個人作品集網站" />
+  <title>邱芸瑄 — Portfolio</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #080808;
+      --card: #111111;
+      --text: #f5f5f5;
+      --muted: #888;
+      --green: #b8ff4d;
+      --blue: #6ee7ff;
+      --line: #252525;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        "Noto Sans TC",
+        "PingFang TC",
+        sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(8, 8, 8, 0.8);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: var(--green);
+      filter: blur(180px);
+      opacity: 0.08;
+      right: -150px;
+      top: 100px;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 14px;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(55px, 10vw, 120px);
+      line-height: 0.95;
+      letter-spacing: -6px;
+      max-width: 900px;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero-description {
+      margin-top: 35px;
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 35px;
+    }
+
+    .button {
+      padding: 13px 22px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      transition: 0.25s;
+      font-size: 14px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .button.primary {
+      background: var(--green);
+      color: #000;
+      border-color: var(--green);
+      font-weight: 700;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    /* SECTION */
+    section {
+      padding: 120px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-label {
+      color: var(--green);
+      font-size: 13px;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      font-size: clamp(35px, 6vw, 65px);
+      letter-spacing: -3px;
+      margin-bottom: 55px;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+    }
+
+    .about-text {
+      color: #aaa;
+      font-size: 18px;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .skill {
+      border: 1px solid var(--line);
+      padding: 9px 15px;
+      border-radius: 100px;
+      color: #bbb;
+      font-size: 13px;
+    }
+
+    .skill:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* PROJECTS */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .project {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 35px;
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: 0.3s;
+    }
+
+    .project:hover {
+      transform: translateY(-8px);
+      border-color: #444;
+    }
+
+    .project.clickable {
+      cursor: pointer;
+    }
+
+    .project.clickable:hover {
+      border-color: var(--green);
+    }
+
+    .project-number {
+      color: var(--green);
+      font-size: 13px;
+    }
+
+    .project h3 {
+      font-size: 28px;
+      margin: 20px 0 10px;
+    }
+
+    .project p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      color: #aaa;
+      border: 1px solid #333;
+      padding: 5px 9px;
+    }
+
+    .project-open-hint {
+      margin-top: 25px;
+      font-size: 12px;
+      color: var(--green);
+    }
+
+    /* EXPERIENCE */
+    .timeline {
+      border-left: 1px solid #333;
+      padding-left: 30px;
+    }
+
+    .timeline-item {
+      margin-bottom: 45px;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      left: -35px;
+      top: 9px;
+    }
+
+    .timeline-date {
+      color: var(--green);
+      font-size: 13px;
+    }
+
+    .timeline h3 {
+      margin: 5px 0;
+      font-size: 23px;
+    }
+
+    .timeline p {
+      color: var(--muted);
+    }
+
+    /* CONTACT */
+    .contact {
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-size: clamp(40px, 8vw, 90px);
+      line-height: 1;
+      letter-spacing: -4px;
+    }
+
+    .contact h2 span {
+      color: var(--green);
+    }
+
+    .contact p {
+      color: var(--muted);
+      margin: 25px auto;
+      max-width: 500px;
+    }
+
+    footer {
+      padding: 30px 0;
+      color: #555;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--line);
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 90px 20px 40px;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--line);
+      max-width: 720px;
+      width: 100%;
+      padding: 45px;
+      position: relative;
+      animation: modalIn 0.25s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    .modal-eyebrow {
+      color: var(--green);
+      font-size: 13px;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .modal h2 {
+      font-size: clamp(28px, 4vw, 38px);
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+      padding-right: 40px;
+    }
+
+    .modal-intro {
+      color: #aaa;
+      font-size: 15px;
+      margin-bottom: 35px;
+      max-width: 62ch;
+    }
+
+    .branch-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .branch {
+      background: var(--card);
+    }
+
+    .branch-head {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: inherit;
+      text-align: left;
+      padding: 20px 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .branch-head-left {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .branch-index {
+      color: var(--green);
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .branch-name {
+      font-size: 17px;
+    }
+
+    .branch-toggle {
+      color: var(--muted);
+      font-size: 18px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .branch.open .branch-toggle {
+      transform: rotate(45deg);
+      color: var(--green);
+    }
+
+    .branch-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+      padding: 0 5px;
+    }
+
+    .branch.open .branch-body {
+      max-height: 220px;
+      padding: 0 5px 22px;
+    }
+
+    .branch-body p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+      max-width: 58ch;
+    }
+
+    .branch-body .project-tags {
+      margin-top: 0;
+    }
+
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+      }
+
+      h1 {
+        letter-spacing: -3px;
+      }
+
+      .about-grid,
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .modal {
+        padding: 30px 22px;
+      }
+
+      .modal-overlay {
+        padding-top: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo">YOUR<span>.</span>NAME</div>
+
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Journey</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+
+      <div class="eyebrow">PORTFOLIO / 2026</div>
+
+      <h1>
+        I CREATE<br />
+        <span>THINGS.</span>
+      </h1>
+
+      <p class="hero-description">
+        嗨，我是「你的名字」，目前是一名大一學生。
+        我正在探索設計、科技與創意之間的可能性。
+        這個網站會記錄我從大一到畢業的學習與作品。
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#projects" class="button primary">
+          查看作品 ↓
+        </a>
+
+        <a href="#contact" class="button">
+          聯絡我
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+
+      <div class="section-label">01 / ABOUT</div>
+
+      <h2 class="section-title">
+        Curious.<br />
+        Always learning.
+      </h2>
+
+      <div class="about-grid">
+
+        <div class="about-text">
+          <p>
+            我相信最好的作品來自於不斷嘗試。
+            現在的我正在建立自己的技能樹，
+            從基礎開始學習設計、程式、研究與問題解決。
+          </p>
+
+          <br />
+
+          <p>
+            這個 Portfolio 不只是展示完成的作品，
+            也會記錄我的過程、失敗以及每一次進步。
+          </p>
+        </div>
+
+        <div class="skills">
+          <div class="skill">UI / UX</div>
+          <div class="skill">Web Design</div>
+          <div class="skill">HTML</div>
+          <div class="skill">CSS</div>
+          <div class="skill">JavaScript</div>
+          <div class="skill">Figma</div>
+          <div class="skill">Photography</div>
+          <div class="skill">Creative Coding</div>
+          <div class="skill">Problem Solving</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+
+      <div class="section-label">02 / SELECTED WORK</div>
+
+      <h2 class="section-title">
+        Things I've<br />
+        been building.
+      </h2>
+
+      <div class="projects">
+
+        <article class="project">
+          <div>
+            <div class="project-number">PROJECT 01</div>
+
+            <h3>第一個網頁作品</h3>
+
+            <p>
+              我的第一個 Web Design 練習。
+              從使用者需求、介面設計到網頁實作，
+              完成一個完整的數位產品原型。
+            </p>
+          </div>
+
+          <div class="project-tags">
+            <span class="tag">WEB</span>
+            <span class="tag">UI/UX</span>
+            <span class="tag">HTML</span>
+          </div>
+        </article>
+
+
+        <article class="project">
+          <div>
+            <div class="project-number">PROJECT 02</div>
+
+            <h3>Campus Project</h3>
+
+            <p>
+              大學課堂中的第一個團隊專案。
+              嘗試將真實問題轉化成一個可執行的解決方案。
+            </p>
+          </div>
+
+          <div class="project-tags">
+            <span class="tag">RESEARCH</span>
+            <span class="tag">TEAMWORK</span>
+            <span class="tag">DESIGN</span>
+          </div>
+        </article>
+
+
+        <article class="project clickable" data-modal="digital-tech">
+          <div>
+            <div class="project-number">PROJECT 03</div>
+
+            <h3>數位科技概論</h3>
+
+            <p>
+              大一必修課的學習紀錄，涵蓋計算機基礎、
+              程式設計、網路資安到人工智慧與數位素養。
+            </p>
+          </div>
+
+          <div>
+            <div class="project-tags">
+              <span class="tag">COURSE</span>
+              <span class="tag">NOTES</span>
+              <span class="tag">2026</span>
+            </div>
+            <div class="project-open-hint">查看課程分支 →</div>
+          </div>
+        </article>
+
+
+        <article class="project">
+          <div>
+            <div class="project-number">PROJECT 04</div>
+
+            <h3>Coming Soon.</h3>
+
+            <p>
+              這裡將會放入我下一個值得展示的作品。
+            </p>
+          </div>
+
+          <div class="project-tags">
+            <span class="tag">2026</span>
+            <span class="tag">BUILDING</span>
+          </div>
+        </article>
+
+
+        <article class="project">
+          <div>
+            <div class="project-number">PROJECT 05</div>
+
+            <h3>Future Work</h3>
+
+            <p>
+              四年後，希望這裡已經累積了一系列
+              能真正代表我的作品。
+            </p>
+          </div>
+
+          <div class="project-tags">
+            <span class="tag">IN PROGRESS</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- JOURNEY -->
+  <section id="experience">
+    <div class="container">
+
+      <div class="section-label">03 / JOURNEY</div>
+
+      <h2 class="section-title">
+        The journey<br />
+        starts here.
+      </h2>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-date">2026 — NOW</div>
+          <h3>University / Year 1</h3>
+          <p>
+            開始學習設計、程式與數位創作，
+            建立自己的基礎能力。
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">FUTURE</div>
+          <h3>Year 2</h3>
+          <p>
+            深入專業領域，開始參與更多實際專案。
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">FUTURE</div>
+          <h3>Year 3</h3>
+          <p>
+            實習、競賽、合作與真實世界的專案。
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">FUTURE</div>
+          <h3>Year 4 / Graduation</h3>
+          <p>
+            用四年的作品與經驗，回答「我是誰，以及我能創造什麼」。
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container contact">
+
+      <div class="section-label">04 / CONTACT</div>
+
+      <h2>
+        LET'S MAKE<br />
+        <span>SOMETHING.</span>
+      </h2>
+
+      <p>
+        如果你對我的作品、合作或實習機會有興趣，
+        歡迎與我聯絡。
+      </p>
+
+      <a
+        href="mailto:your.email@example.com"
+        class="button primary"
+      >
+        your.email@example.com
+      </a>
+
+    </div>
+  </section>
+
+
+  <div class="container">
+    <footer>
+      <div>© 2026 YOUR NAME</div>
+      <div>Built while learning.</div>
+    </footer>
+  </div>
+
+
+  <!-- MODAL: 數位科技概論 -->
+  <div class="modal-overlay" id="modal-digital-tech" data-modal-id="digital-tech">
+    <div class="modal">
+      <button class="modal-close" data-close>✕</button>
+
+      <div class="modal-eyebrow">PROJECT 03 / COURSE NOTES</div>
+      <h2>數位科技概論</h2>
+      <p class="modal-intro">
+        這門課帶我從零開始認識數位世界的運作方式。
+        以下是這學期整理的六個學習分支，點開每一項可以看到重點內容。
+      </p>
+
+      <div class="branch-list">
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">01</span>
+              <span class="branch-name">計算機科學基礎</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              認識電腦硬體架構、作業系統運作原理，
+              以及資料在電腦中如何被表示與儲存（二進位、編碼系統）。
+            </p>
+            <div class="project-tags">
+              <span class="tag">硬體</span>
+              <span class="tag">作業系統</span>
+              <span class="tag">資料表示法</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">02</span>
+              <span class="branch-name">程式設計入門</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              從 Python 基礎語法出發，練習變數、迴圈、條件判斷，
+              培養用演算法拆解問題的思維方式。
+            </p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">演算法思維</span>
+              <span class="tag">除錯</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">03</span>
+              <span class="branch-name">網路與資訊安全</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              了解網路的基本架構與通訊協定，
+              並學習基礎資安觀念，包含密碼安全與個人資料保護。
+            </p>
+            <div class="project-tags">
+              <span class="tag">網路架構</span>
+              <span class="tag">資安意識</span>
+              <span class="tag">隱私保護</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">04</span>
+              <span class="branch-name">數據與人工智慧</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              初步接觸大數據與機器學習的核心概念，
+              並討論 AI 應用背後的倫理與偏見議題。
+            </p>
+            <div class="project-tags">
+              <span class="tag">大數據</span>
+              <span class="tag">機器學習概念</span>
+              <span class="tag">AI 倫理</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">05</span>
+              <span class="branch-name">新興科技應用</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              探索物聯網、區塊鏈與元宇宙等新興科技，
+              思考這些技術可能帶來的產業與生活改變。
+            </p>
+            <div class="project-tags">
+              <span class="tag">IoT</span>
+              <span class="tag">區塊鏈</span>
+              <span class="tag">元宇宙</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">06</span>
+              <span class="branch-name">數位社會與素養</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              反思數位公民的責任、資訊倫理與著作權議題，
+              學習在數位環境中做出負責任的判斷。
+            </p>
+            <div class="project-tags">
+              <span class="tag">資訊倫理</span>
+              <span class="tag">數位公民</span>
+              <span class="tag">著作權</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Open a modal when its trigger card is clicked
+    document.querySelectorAll("[data-modal]").forEach((card) => {
+      card.addEventListener("click", () => {
+        const id = card.getAttribute("data-modal");
+        const overlay = document.getElementById("modal-" + id);
+        if (overlay) {
+          overlay.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+      });
+    });
+
+    // Close modal via close button or clicking the overlay background
+    document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay || e.target.closest("[data-close]")) {
+          overlay.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+      });
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal-overlay.open").forEach((overlay) => {
+          overlay.classList.remove("open");
+        });
+        document.body.style.overflow = "";
+      }
+    });
+
+    // Accordion behaviour for course branches
+    document.querySelectorAll("[data-branch]").forEach((head) => {
+      head.addEventListener("click", () => {
+        const branch = head.closest(".branch");
+        branch.classList.toggle("open");
+      });
+    });
+  </script>
+
+</body>
+</html>
