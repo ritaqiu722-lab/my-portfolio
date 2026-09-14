@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="個人作品集網站" />
-  <title>你的名字 — Portfolio</title>
+  <title>邱芸瑄 — Portfolio</title>
 
   <style>
     * {
@@ -144,6 +144,10 @@
       border-radius: 100px;
       transition: 0.25s;
       font-size: 14px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
     }
 
     .button.primary {
@@ -231,6 +235,14 @@
       border-color: #444;
     }
 
+    .project.clickable {
+      cursor: pointer;
+    }
+
+    .project.clickable:hover {
+      border-color: var(--green);
+    }
+
     .project-number {
       color: var(--green);
       font-size: 13px;
@@ -258,6 +270,12 @@
       color: #aaa;
       border: 1px solid #333;
       padding: 5px 9px;
+    }
+
+    .project-open-hint {
+      margin-top: 25px;
+      font-size: 12px;
+      color: var(--green);
     }
 
     /* EXPERIENCE */
@@ -326,6 +344,161 @@
       border-top: 1px solid var(--line);
     }
 
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 90px 20px 40px;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--line);
+      max-width: 720px;
+      width: 100%;
+      padding: 45px;
+      position: relative;
+      animation: modalIn 0.25s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    .modal-eyebrow {
+      color: var(--green);
+      font-size: 13px;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .modal h2 {
+      font-size: clamp(28px, 4vw, 38px);
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+      padding-right: 40px;
+    }
+
+    .modal-intro {
+      color: #aaa;
+      font-size: 15px;
+      margin-bottom: 35px;
+      max-width: 62ch;
+    }
+
+    .branch-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .branch {
+      background: var(--card);
+    }
+
+    .branch-head {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: inherit;
+      text-align: left;
+      padding: 20px 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .branch-head-left {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .branch-index {
+      color: var(--green);
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .branch-name {
+      font-size: 17px;
+    }
+
+    .branch-toggle {
+      color: var(--muted);
+      font-size: 18px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .branch.open .branch-toggle {
+      transform: rotate(45deg);
+      color: var(--green);
+    }
+
+    .branch-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+      padding: 0 5px;
+    }
+
+    .branch.open .branch-body {
+      max-height: 220px;
+      padding: 0 5px 22px;
+    }
+
+    .branch-body p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+      max-width: 58ch;
+    }
+
+    .branch-body .project-tags {
+      margin-top: 0;
+    }
+
     @media (max-width: 700px) {
       .nav-links {
         display: none;
@@ -347,6 +520,14 @@
       footer {
         flex-direction: column;
         gap: 10px;
+      }
+
+      .modal {
+        padding: 30px 22px;
+      }
+
+      .modal-overlay {
+        padding-top: 70px;
       }
     }
   </style>
@@ -499,9 +680,32 @@
         </article>
 
 
-        <article class="project">
+        <article class="project clickable" data-modal="digital-tech">
           <div>
             <div class="project-number">PROJECT 03</div>
+
+            <h3>數位科技概論</h3>
+
+            <p>
+              大一必修課的學習紀錄，涵蓋計算機基礎、
+              程式設計、網路資安到人工智慧與數位素養。
+            </p>
+          </div>
+
+          <div>
+            <div class="project-tags">
+              <span class="tag">COURSE</span>
+              <span class="tag">NOTES</span>
+              <span class="tag">2026</span>
+            </div>
+            <div class="project-open-hint">查看課程分支 →</div>
+          </div>
+        </article>
+
+
+        <article class="project">
+          <div>
+            <div class="project-number">PROJECT 04</div>
 
             <h3>Coming Soon.</h3>
 
@@ -519,7 +723,7 @@
 
         <article class="project">
           <div>
-            <div class="project-number">PROJECT 04</div>
+            <div class="project-number">PROJECT 05</div>
 
             <h3>Future Work</h3>
 
@@ -623,6 +827,194 @@
       <div>Built while learning.</div>
     </footer>
   </div>
+
+
+  <!-- MODAL: 數位科技概論 -->
+  <div class="modal-overlay" id="modal-digital-tech" data-modal-id="digital-tech">
+    <div class="modal">
+      <button class="modal-close" data-close>✕</button>
+
+      <div class="modal-eyebrow">PROJECT 03 / COURSE NOTES</div>
+      <h2>數位科技概論</h2>
+      <p class="modal-intro">
+        這門課帶我從零開始認識數位世界的運作方式。
+        以下是這學期整理的六個學習分支，點開每一項可以看到重點內容。
+      </p>
+
+      <div class="branch-list">
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">01</span>
+              <span class="branch-name">計算機科學基礎</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              認識電腦硬體架構、作業系統運作原理，
+              以及資料在電腦中如何被表示與儲存（二進位、編碼系統）。
+            </p>
+            <div class="project-tags">
+              <span class="tag">硬體</span>
+              <span class="tag">作業系統</span>
+              <span class="tag">資料表示法</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">02</span>
+              <span class="branch-name">程式設計入門</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              從 Python 基礎語法出發，練習變數、迴圈、條件判斷，
+              培養用演算法拆解問題的思維方式。
+            </p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">演算法思維</span>
+              <span class="tag">除錯</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">03</span>
+              <span class="branch-name">網路與資訊安全</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              了解網路的基本架構與通訊協定，
+              並學習基礎資安觀念，包含密碼安全與個人資料保護。
+            </p>
+            <div class="project-tags">
+              <span class="tag">網路架構</span>
+              <span class="tag">資安意識</span>
+              <span class="tag">隱私保護</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">04</span>
+              <span class="branch-name">數據與人工智慧</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              初步接觸大數據與機器學習的核心概念，
+              並討論 AI 應用背後的倫理與偏見議題。
+            </p>
+            <div class="project-tags">
+              <span class="tag">大數據</span>
+              <span class="tag">機器學習概念</span>
+              <span class="tag">AI 倫理</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">05</span>
+              <span class="branch-name">新興科技應用</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              探索物聯網、區塊鏈與元宇宙等新興科技，
+              思考這些技術可能帶來的產業與生活改變。
+            </p>
+            <div class="project-tags">
+              <span class="tag">IoT</span>
+              <span class="tag">區塊鏈</span>
+              <span class="tag">元宇宙</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch">
+          <button class="branch-head" data-branch>
+            <span class="branch-head-left">
+              <span class="branch-index">06</span>
+              <span class="branch-name">數位社會與素養</span>
+            </span>
+            <span class="branch-toggle">+</span>
+          </button>
+          <div class="branch-body">
+            <p>
+              反思數位公民的責任、資訊倫理與著作權議題，
+              學習在數位環境中做出負責任的判斷。
+            </p>
+            <div class="project-tags">
+              <span class="tag">資訊倫理</span>
+              <span class="tag">數位公民</span>
+              <span class="tag">著作權</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Open a modal when its trigger card is clicked
+    document.querySelectorAll("[data-modal]").forEach((card) => {
+      card.addEventListener("click", () => {
+        const id = card.getAttribute("data-modal");
+        const overlay = document.getElementById("modal-" + id);
+        if (overlay) {
+          overlay.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+      });
+    });
+
+    // Close modal via close button or clicking the overlay background
+    document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay || e.target.closest("[data-close]")) {
+          overlay.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+      });
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal-overlay.open").forEach((overlay) => {
+          overlay.classList.remove("open");
+        });
+        document.body.style.overflow = "";
+      }
+    });
+
+    // Accordion behaviour for course branches
+    document.querySelectorAll("[data-branch]").forEach((head) => {
+      head.addEventListener("click", () => {
+        const branch = head.closest(".branch");
+        branch.classList.toggle("open");
+      });
+    });
+  </script>
 
 </body>
 </html>
